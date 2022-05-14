@@ -1,3 +1,18 @@
 html {
     background-color: red;
 }
+
+.gameboard {
+    display: flex;
+    flex: 1;
+}
+
+.cell {
+    display: flex;
+    width: 100px;
+    height: 100px;
+    font-weight: bold;
+    font-size: 96px;
+    justify-content: center;
+    align-items: center;
+}

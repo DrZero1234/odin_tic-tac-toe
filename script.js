@@ -1,4 +1,24 @@
 const gameBoard = (() => {
+    const generate_gameboard = () => {
+        const GAMEBOARD_DIV = document.querySelector(".gameboard")
+        for (let i = 0; i < 3;i++){
+            row_div = document.createElement("div");
+            row_div.className="row"
+            if (i < 2) {
+                row_div.style.cssText += "border-right: 5px solid black;"
+            }
+
+            GAMEBOARD_DIV.appendChild(row_div)
+            for (let k = 0; k < 3; k++) {
+                const cell_div = document.createElement("div");
+                cell_div.className = "cell"
+                cell_div.textContent = "O"
+                row_div.appendChild(cell_div)
+
+            }
+        }
+    }
+    generate_gameboard()
     /*
         SET UP GAMEBOARD CONTET
         A function which will store the gamebaord in an array
@@ -32,3 +52,4 @@ const playGame = (() => {
     */
 
 })()
+
