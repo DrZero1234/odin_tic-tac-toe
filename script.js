@@ -14,7 +14,7 @@ const displayController = (() => {
 
     const _generate_gameboard = () => {
         let index = 0;
-        const GAMEBOARD_DIV = document.querySelector(".gameboard")
+        const GAMEBOARD_DIV = document.querySelector("#gameboard")
         for (let i = 0; i < 3;i++){
             row_div = document.createElement("div");
             row_div.className="row"
@@ -64,21 +64,7 @@ const Player = (name,mark) => {
 }
 
 const playGame = (() => {
-    gboard = gameBoard.getBoard()
-    const cell_fields = document.querySelectorAll(".cell");
-    player1 = Player("Mark", "X");
-    player2 = Player("Joe", "O");
-
-    const placeMark = (player, index) => {
-        for (cell of cell_fields) {
-            cell.addEventListener("click", () => {
-                gboard[cell.dataset.index] = player.mark;
-                cell_fields[cell.dataset.index].textContent = player.mark;
-            })
-        }
-    }
-
-    return {placeMark}
+    const MARK_BTNS = document.querySelector(".title-screen").querySelectorAll("button");
    
     /*
      GAME LOGIC

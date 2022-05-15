@@ -1,10 +1,51 @@
 html {
-    background-color: red;
 }
 
-.gameboard {
+.container {
     display: flex;
-    flex: 1;
+    flex-direction: column;
+    align-items: center;
+}
+
+#gameboard.disabled,
+#title-screen.disabled{
+    display:none;
+}
+
+#title-screen,
+#gameboard {
+    display: flex;
+    justify-content: center;
+
+
+}
+
+#gameboard {
+    border: 3px solid black;
+    width: max-content;
+}
+
+#title-screen {
+    flex-direction: column;
+    align-items: center;
+
+}
+
+
+.mark-select {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50%;
+    margin: 50px 100px;
+}
+
+.mark-select button {
+    flex: 1 1 0;
+    height: 100px;
+    width: 400px;
+    font-size: 72px;
+    font-weight: bold;
 }
 
 .cell {
@@ -20,3 +61,4 @@ html {
 .cell:hover {
     background-color: green;
 }
+
