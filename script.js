@@ -14,7 +14,8 @@ const displayController = (() => {
 
     const _generate_gameboard = () => {
         let index = 0;
-        const GAMEBOARD_DIV = document.querySelector("#gameboard")
+        const TITLE_SCREEN_DIV = document.getElementById("mark-select")
+        const GAMEBOARD_DIV = document.getElementById("gameboard")
         for (let i = 0; i < 3;i++){
             row_div = document.createElement("div");
             row_div.className="row"
@@ -36,7 +37,16 @@ const displayController = (() => {
             }
         }
     }
+
+    const toggleClass = (hide, appear) => {
+        hide.className = "disabled";
+        appear.className = "";
+    }
     _generate_gameboard()
+
+    return {toggleClass}
+
+
 
 
     /*
@@ -64,7 +74,28 @@ const Player = (name,mark) => {
 }
 
 const playGame = (() => {
-    const MARK_BTNS = document.querySelector(".title-screen").querySelectorAll("button");
+    const TITLE_SCREEN_DIV = document.getElementById("title-screen")
+    const GAMEBOARD_DIV = document.getElementById("gameboard")
+    const MARK_BTNS = document.querySelector("#title-screen").querySelectorAll("button");
+
+    const createPlayer =  (mark) => {
+        if (mark === "X") {
+            player1 = Player("Player1", "X");
+            player2 = Player("Player2", "O");
+        } else {
+            player1 = Player("Player1", "O");
+            player2 = Player("Player2", "X");
+        }
+        displayController.toggleClass(TITLE_SCREEN_DIV,GAMEBOARD_DIV)
+        return {player1, player2};
+    }
+
+    MARK_BTNS.forEach((button) => {
+        button.addEventListener("click", createPlayer(button.innerHTML))
+    })
+
+    return {createPlayer}
+
    
     /*
      GAME LOGIC
