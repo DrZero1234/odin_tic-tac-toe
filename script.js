@@ -1,58 +1,37 @@
-const GAMEBOARD_DIV = document.getElementById("gameboard")
+const gameboard =  (() => {
 
-const gameboard = (() => {
-    board = []
+    board = ["","","","","","","","","",]
+
     const getBoard = () => {
-        return board
-    }
+        return board;
+    };
 
 
     return {getBoard}
-})()
+})();
 
-const Player  = (name, mark) => {
-
+const Player = (name,mark) => {
     return {name, mark}
 }
 
+const displayController = (() => {
+    const GAMEBOARD_DIV = document.getElementById("gameboard");
 
-const generate_board = (() => {
-    board = gameboard.getBoard();
-    for (let i = 0; i < 9;i++) {
-        const div_elem = document.createElement("div")
-        div_elem.className = "cell";
-        div_elem.setAttribute("data-index", i);
-        div_elem.textContent = "";
-        GAMEBOARD_DIV.appendChild(div_elem);
-        board.push("")
-    }
-})()
+    const generateBoard = () => {
 
-
-const displayController =  () => {
-
-    const createPlayer = (mark) => {
-        if (mark === "X") {
-            player1 = Player("Player1", "X");
-            player2 = Player("Player2", "O");
-        } else {
-            player1 = Player("Player1", "O");
-            player2 = Player("Player2", "X")
+        for (let i = 0; i < 9;i++) {
+            div_elem = document.createElement("div");
+            div_elem.className = "cell";
+            div_elem.setAttribute("data-index", i);
+            div_elem.textContent = board[i]
+            GAMEBOARD_DIV.appendChild(div_elem);
         }
-        return {player1, player2}
     }
 
-    const toggleClass = (hide, appear) => {
-        hide.className = "disabled";
-        appear.className = ""
-    }
+    return {generateBoard}
 
-    return { createPlayer}
-}
+})();
 
-const playGame = (() => {
-    const MARK_BTNS = document.querySelector(".mark-select").querySelectorAll("button")
-    MARK_BTNS.forEach((button) => {
-        button.onclick = displayController.createPlayer(button.textContent)
-    })
+const GameLogic = (() => {
+    displayController.generateBoard();
 })()
