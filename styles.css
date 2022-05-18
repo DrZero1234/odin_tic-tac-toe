@@ -1,4 +1,7 @@
-html {
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .container {
@@ -16,13 +19,22 @@ html {
 #gameboard {
     display: flex;
     justify-content: center;
-
-
 }
 
 #gameboard {
-    border: 3px solid black;
-    width: max-content;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.cell {
+    display: flex;
+    height: 100px;
+    width: 100px;
+    border: 2px solid black;
+    font-size: 96px;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
 }
 
 #title-screen {
@@ -46,19 +58,5 @@ html {
     width: 400px;
     font-size: 72px;
     font-weight: bold;
-}
-
-.cell {
-    display: flex;
-    width: 100px;
-    height: 100px;
-    font-weight: bold;
-    font-size: 96px;
-    justify-content: center;
-    align-items: center;
-}
-
-.cell:hover {
-    background-color: green;
 }
 
