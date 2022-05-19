@@ -1,6 +1,6 @@
 const gameboard =  (() => {
 
-    board = ["","","","","","","","","",]
+    let board = ["","","","","","","","","",]
 
     const getBoard = () => {
         return board;
@@ -23,15 +23,34 @@ const displayController = (() => {
             div_elem = document.createElement("div");
             div_elem.className = "cell";
             div_elem.setAttribute("data-index", i);
-            div_elem.textContent = board[i]
+            div_elem.textContent = gameboard.getBoard()[i]
             GAMEBOARD_DIV.appendChild(div_elem);
         }
     }
 
-    return {generateBoard}
+    const createPlayer = (mark) => {
+        player1 = Player("Player1", mark);
+        if (player1.mark === "X") {
+            player2 = Player("Player2", "O")
+        } else {
+            player2 = Player("Player2", "X")
+        }
+        
+
+
+        return {player1, player2}
+    }
+
+    return {generateBoard, createPlayer}
 
 })();
 
 const GameLogic = (() => {
+
+    const MARK_BTNS = document.querySelector(".mark-select").querySelectorAll("button")
+    MARK_BTNS.forEach((button) => {
+        button.addEventListener("click",displayController.createPlayer(button.textContent))
+    })
     displayController.generateBoard();
+
 })()
