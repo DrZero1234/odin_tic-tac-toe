@@ -11,14 +11,25 @@ const gameboard =  (() => {
         displayController.generateBoard();
     }
 
-    const placeMark = (players, index, turn) =>  {
-        if (board[index] != " ") {
-            alert("Cant place mark there")
-            return false
+    const placeMark = (cell, players, turn) => {
+        if (cell.textContent != " ") {
+            alert("Cant place mark there");
+            return false;
         } else {
-            for (player in players) {
+            for (player of players) {
+                if (player.mark === turn) {
+                    cell.textContent = player.mark;
+                    gameboard.getBoard[cell.dataset.index] = player.mark;
+                    player.moves.push(cell.dataset.index)
+                }
+                if (player.mark === "X") {
+                    turn = "O"
+                } else {
+                    turn = "X"
+                }
             }
         }
+    }
 
 
     return {getBoard, resetBoard, placeMark}
@@ -65,6 +76,7 @@ const displayController = (() => {
 })();
 
 const GameLogic = (() => {
+    displayController.generateBoard();
     const WIN_CONDITIONS = [
         [0,1,2],
         [0,3,6],
@@ -73,20 +85,17 @@ const GameLogic = (() => {
         [2,5,8],
         [2,4,6],
         [3,4,5],
-
     ]
 
-    let player1;
-    let player2;
-
-
+    let turn = "X";
 
     const TITLE_SCREEN = document.getElementById("title-screen");
     const GAMEBOARD_DIV = document.getElementById("gameboard");
+    const GAMEBOARD_CELLS = GAMEBOARD_DIV.querySelectorAll("div");
     const MARK_BTNS = document.querySelector(".mark-select").querySelectorAll("button")
 
 
-    displayController.generateBoard();
+
     MARK_BTNS.forEach((button) => {
         button.addEventListener ("click",() => {
             displayController.createPlayer(button);
@@ -94,5 +103,10 @@ const GameLogic = (() => {
         }) 
     })
 
+    GAMEBOARD_CELLS.forEach((cell) => {
+        cell.addEventListener("click", () => {
+            gameboard.placeMark(cell,[player1,player2], turn)
+        })
+    })
 
 })()
