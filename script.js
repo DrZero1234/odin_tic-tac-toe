@@ -94,8 +94,6 @@ const GameLogic = (() => {
     const GAMEBOARD_CELLS = GAMEBOARD_DIV.querySelectorAll("div");
     const MARK_BTNS = document.querySelector(".mark-select").querySelectorAll("button")
 
-
-
     MARK_BTNS.forEach((button) => {
         button.addEventListener ("click",() => {
             displayController.createPlayer(button);
@@ -105,7 +103,7 @@ const GameLogic = (() => {
 
     GAMEBOARD_CELLS.forEach((cell) => {
         cell.addEventListener("click", () => {
-            gameboard.placeMark(cell,[player1,player2], turn)
+            gameboard.placeMark(cell,[player1,player2], turn);
         })
     })
 
