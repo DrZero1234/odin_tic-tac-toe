@@ -11,13 +11,22 @@ const gameboard =  (() => {
         displayController.generateBoard();
     }
 
+    const placeMark = (players, index, turn) =>  {
+        if (board[index] != " ") {
+            alert("Cant place mark there")
+            return false
+        } else {
+            for (player in players) {
+            }
+        }
 
 
-    return {getBoard, resetBoard}
+    return {getBoard, resetBoard, placeMark}
 })();
 
 const Player = (name,mark) => {
-    return {name, mark}
+    const moves = []
+    return {name, mark, moves}
 }
 
 const displayController = (() => {
@@ -75,6 +84,8 @@ const GameLogic = (() => {
     const TITLE_SCREEN = document.getElementById("title-screen");
     const GAMEBOARD_DIV = document.getElementById("gameboard");
     const MARK_BTNS = document.querySelector(".mark-select").querySelectorAll("button")
+
+
     displayController.generateBoard();
     MARK_BTNS.forEach((button) => {
         button.addEventListener ("click",() => {
