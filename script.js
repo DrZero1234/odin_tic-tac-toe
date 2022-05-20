@@ -1,13 +1,19 @@
 const gameboard =  (() => {
 
-    let board = ["","","","","","","","","",]
+    let board = [" X ", " ", " ", "O", " "," ", " ", " ", " "]
 
     const getBoard = () => {
         return board;
     };
 
+    const resetBoard = () => {
+        board = [" ", " ", " ", " ", " "," ", " ", " ", " "]
+        displayController.generateBoard();
+    }
 
-    return {getBoard}
+
+
+    return {getBoard, resetBoard}
 })();
 
 const Player = (name,mark) => {
@@ -18,7 +24,7 @@ const displayController = (() => {
     const GAMEBOARD_DIV = document.getElementById("gameboard");
 
     const generateBoard = () => {
-
+        GAMEBOARD_DIV.innerHTML = ""
         for (let i = 0; i < 9;i++) {
             div_elem = document.createElement("div");
             div_elem.className = "cell";
@@ -40,20 +46,42 @@ const displayController = (() => {
         }
     }
 
-    return {generateBoard, createPlayer}
+    const toggleDisplay =  (hide, appear) => {
+        hide.className = "disabled";
+        appear.className = "";
+    }
+
+    return {generateBoard, createPlayer, toggleDisplay, GAMEBOARD_DIV}
 
 })();
 
 const GameLogic = (() => {
+    const WIN_CONDITIONS = [
+        [0,1,2],
+        [0,3,6],
+        [0,4,8],
+        [1,4,7],
+        [2,5,8],
+        [2,4,6],
+        [3,4,5],
+
+    ]
+
     let player1;
     let player2;
 
+
+
+    const TITLE_SCREEN = document.getElementById("title-screen");
+    const GAMEBOARD_DIV = document.getElementById("gameboard");
     const MARK_BTNS = document.querySelector(".mark-select").querySelectorAll("button")
     displayController.generateBoard();
     MARK_BTNS.forEach((button) => {
         button.addEventListener ("click",() => {
             displayController.createPlayer(button);
+            displayController.toggleDisplay(TITLE_SCREEN, GAMEBOARD_DIV)
         }) 
     })
+
 
 })()

@@ -26,6 +26,11 @@
     grid-template-columns: repeat(3, 1fr);
 }
 
+#gameboard > div:hover {
+    background-color: #BFDBFE;
+    cursor: pointer;
+}
+
 .cell {
     display: flex;
     height: 100px;
