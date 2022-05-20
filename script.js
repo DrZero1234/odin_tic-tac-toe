@@ -28,17 +28,16 @@ const displayController = (() => {
         }
     }
 
-    const createPlayer = (mark) => {
-        player1 = Player("Player1", mark);
+    const createPlayer = (button) => {
+        player1 = Player("Player1", button.id);
         if (player1.mark === "X") {
             player2 = Player("Player2", "O")
-        } else {
+        } else if (player1.mark === "O") {
             player2 = Player("Player2", "X")
+        } else {
+            alert("Invalid button id")
+            return false;
         }
-        
-
-
-        return {player1, player2}
     }
 
     return {generateBoard, createPlayer}
@@ -46,11 +45,15 @@ const displayController = (() => {
 })();
 
 const GameLogic = (() => {
+    let player1;
+    let player2;
 
     const MARK_BTNS = document.querySelector(".mark-select").querySelectorAll("button")
-    MARK_BTNS.forEach((button) => {
-        button.addEventListener("click",displayController.createPlayer(button.textContent))
-    })
     displayController.generateBoard();
+    MARK_BTNS.forEach((button) => {
+        button.addEventListener ("click",() => {
+            displayController.createPlayer(button);
+        }) 
+    })
 
 })()
