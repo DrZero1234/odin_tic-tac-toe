@@ -9,6 +9,7 @@ const gameboard =  (() => {
     const resetBoard = () => {
         board = [" ", " ", " ", " ", " "," ", " ", " ", " "]
         displayController.generateBoard();
+
     }
 
     const placeMark = (cell, players, turn) => {
@@ -48,6 +49,8 @@ const displayController = (() => {
             alert("Invalid button id")
             return false;
         }
+
+        return {player1, player2}
     }
 
     const toggleDisplay =  (hide, appear) => {
@@ -72,51 +75,72 @@ const GameLogic = (() => {
     ]
 
     let turn = "X";
+    let player1;
+    let player2;
+
 
     const TITLE_SCREEN = document.getElementById("title-screen");
     const GAMEBOARD_DIV = document.getElementById("gameboard");
     const GAMEBOARD_CELLS = GAMEBOARD_DIV.querySelectorAll("div");
     const MARK_BTNS = document.querySelector(".mark-select").querySelectorAll("button")
+    const RESTART_BTN = document.getElementById("restart");
 
-    const switch_turn = (turn) => {
-        if (turn === "X")  {
-            turn = "O"
-        } else {
-            turn = "X"
-        }
-
+    function place_mark(cell_array) {
+        cell_array.forEach((cell) => {
+            cell.addEventListener("click", () => {
+                // PLACING MARK ON THE BOARD
+                if (player1.moves.includes(cell.dataset.index) || player2.moves.includes(cell.dataset.index)) {
+                    alert("Cant place mark there");
+                    return false;
+                } else {
+                    for (player of [player1, player2]) {
+                        if (player.mark === turn) {
+                            cell.textContent = player.mark;
+                            gameboard.getBoard()[cell.dataset.index] = player.mark;
+                            // ADDS INDEX TO THE PLAYER´S MOVES ARRAY
+                            player.moves.push(cell.dataset.index)
+                        }
+                    }
+                }
+            // SWITCH TURN
+    
+            if (turn === "X") {
+                turn = "O"
+            } else {
+                turn = "X"
+            }
+            })
+        })
     }
+    
 
     MARK_BTNS.forEach((button) => {
         button.addEventListener ("click",() => {
-            displayController.createPlayer(button);
+            players = displayController.createPlayer(button);
+            player1 = players.player1;
+            player2 = players.player2
+            console.log(players)
             displayController.toggleDisplay(TITLE_SCREEN, GAMEBOARD_DIV)
         }) 
     })
 
-    GAMEBOARD_CELLS.forEach((cell) => {
-        cell.addEventListener("click", () => {
-            // PLACING MARK ON THE BOARD
-            if (cell.textContent != " ") {
-                alert("Cant place mark there");
-                return false;
-            } else {
-                for (player of [player1, player2]) {
-                    if (player.mark === turn) {
-                        cell.textContent = player.mark;
-                        gameboard.getBoard[cell.dataset.index] = player.mark;
-                        // ADDS THE INDEX TO THE PLAYER´s MOVE ARRAY
-                        player.moves.push(cell.dataset.index)
-                    }
-                }
-            }
-        // SWITCH TURN
 
-        if (turn === "X") {
-            turn = "O"
-        } else {
-            turn = "X"
+
+    RESTART_BTN.addEventListener("click", () => {
+        gameboard.resetBoard()
+        const GAMEBOARD_CELLS = GAMEBOARD_DIV.querySelectorAll("div");
+        place_mark(GAMEBOARD_CELLS)
+        player1.moves = [];
+        player2.moves = [];
+    });
+
+    const check_winner = (p1,p2) => {
+        if (p1.moves.length > 2 || p2.moves.length > 2) {
+            alert("Check_winner function active")
         }
-        })
-    })
+    }
+
+    place_mark(GAMEBOARD_CELLS)
+
+
 })()
