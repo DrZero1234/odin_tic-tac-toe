@@ -12,23 +12,7 @@ const gameboard =  (() => {
     }
 
     const placeMark = (cell, players, turn) => {
-        if (cell.textContent != " ") {
-            alert("Cant place mark there");
-            return false;
-        } else {
-            for (player of players) {
-                if (player.mark === turn) {
-                    cell.textContent = player.mark;
-                    gameboard.getBoard[cell.dataset.index] = player.mark;
-                    player.moves.push(cell.dataset.index)
-                }
-                if (player.mark === "X") {
-                    turn = "O"
-                } else {
-                    turn = "X"
-                }
-            }
-        }
+        
     }
 
 
@@ -94,6 +78,15 @@ const GameLogic = (() => {
     const GAMEBOARD_CELLS = GAMEBOARD_DIV.querySelectorAll("div");
     const MARK_BTNS = document.querySelector(".mark-select").querySelectorAll("button")
 
+    const switch_turn = (turn) => {
+        if (turn === "X")  {
+            turn = "O"
+        } else {
+            turn = "X"
+        }
+
+    }
+
     MARK_BTNS.forEach((button) => {
         button.addEventListener ("click",() => {
             displayController.createPlayer(button);
@@ -103,8 +96,27 @@ const GameLogic = (() => {
 
     GAMEBOARD_CELLS.forEach((cell) => {
         cell.addEventListener("click", () => {
-            gameboard.placeMark(cell,[player1,player2], turn);
+            // PLACING MARK ON THE BOARD
+            if (cell.textContent != " ") {
+                alert("Cant place mark there");
+                return false;
+            } else {
+                for (player of [player1, player2]) {
+                    if (player.mark === turn) {
+                        cell.textContent = player.mark;
+                        gameboard.getBoard[cell.dataset.index] = player.mark;
+                        // ADDS THE INDEX TO THE PLAYER´s MOVE ARRAY
+                        player.moves.push(cell.dataset.index)
+                    }
+                }
+            }
+        // SWITCH TURN
+
+        if (turn === "X") {
+            turn = "O"
+        } else {
+            turn = "X"
+        }
         })
     })
-
 })()
