@@ -1,13 +1,13 @@
 const gameboard =  (() => {
 
-    let board = ["  ", " ", " ", " ", " "," ", " ", " ", " "]
+    let board = new Array(9)
 
     const getBoard = () => {
         return board;
     };
 
     const resetBoard = () => {
-        board = [" ", " ", " ", " ", " "," ", " ", " ", " "]
+        board = new Array(9)
         displayController.generateBoard();
 
     }
@@ -99,7 +99,7 @@ const GameLogic = (() => {
             cell.addEventListener("click", () => {
 
                 // PLACING MARK ON THE BOARD
-                if (player1.moves.includes(cell.dataset.index) || player2.moves.includes(cell.dataset.index)) {
+                if (player1.moves.includes(+cell.dataset.index) || player2.moves.includes(+cell.dataset.index)) {
                     alert("Cant place mark there");
                     return false;
                 } else {
@@ -158,6 +158,9 @@ const GameLogic = (() => {
                 })
             }
         })
+        if (gameboard.getBoard().every(element => element.length < 0)) {
+            alert("The board is full")
+        }
 
     }
 
