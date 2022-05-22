@@ -97,6 +97,7 @@ const GameLogic = (() => {
     const GAMEBOARD_CELLS = GAMEBOARD_DIV.querySelectorAll("div");
     const MARK_BTNS = document.querySelector(".mark-select").querySelectorAll("button")
     const RESTART_BTN = document.getElementById("restart");
+    const RESULT_TEXT = document.getElementById("result")
 
     function place_mark(cell_array) {
         cell_array.forEach((cell) => {
@@ -156,8 +157,16 @@ const GameLogic = (() => {
             const p1Wins = winCondition.every(a => player1.moves.includes(a))
             const p2Wins = winCondition.every(a => player2.moves.includes(a))
 
-            if (p1Wins || p2Wins) {
-                alert("Player won")
+            if (p1Wins) {
+                RESULT_TEXT.textContent = `Player 1 won!`
+                GAMEBOARD_CELLS.forEach((cell) => {
+                    cell.style.pointerEvents = "none"
+                    return
+                })
+            }
+
+            else if (p2Wins) {
+                RESULT_TEXT.textContent = `Player 2 won!`
                 GAMEBOARD_CELLS.forEach((cell) => {
                     cell.style.pointerEvents = "none"
                     return
@@ -167,8 +176,14 @@ const GameLogic = (() => {
 
             // Checks if gameboard is full
             else if (!gameboard.getBoard().includes(" ") && p1Wins ===false && p2Wins === false) {
-                alert("The array is full. Its a draw")
+                RESULT_TEXT.textContent = `The game is a draw`
+                GAMEBOARD_CELLS.forEach((cell) => {
+                    cell.style.pointerEvents = "none"
+                    return
+                })
             }
+
+
 
             console.log(`Player 1 winning status: ${p1Wins}`);
             console.log(`Player 2 winning status: ${p2Wins}`);
