@@ -21,6 +21,12 @@
     justify-content: center;
 }
 
+.board-field{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
 #gameboard {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

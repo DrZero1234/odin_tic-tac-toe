@@ -1,13 +1,13 @@
 const gameboard =  (() => {
 
-    let board = new Array(9)
+    let board = [" ", " ", " ", " ", " "," ", " ", " ", " "]
 
     const getBoard = () => {
         return board;
     };
 
     const resetBoard = () => {
-        board = new Array(9)
+        board = [" ", " ", " ", " ", " "," ", " ", " ", " "]
         displayController.generateBoard();
 
     }
@@ -54,8 +54,12 @@ const displayController = (() => {
     }
 
     const toggleDisplay =  (hide, appear) => {
-        hide.className = "disabled";
-        appear.className = "";
+        for (item of hide) {
+            item.className = "disabled"
+        }
+        for (app of appear) {
+            app.className = ""
+        }
     }
 
     return {generateBoard, createPlayer, toggleDisplay, GAMEBOARD_DIV}
@@ -131,7 +135,8 @@ const GameLogic = (() => {
             player1 = players.player1;
             player2 = players.player2
             console.log(players)
-            displayController.toggleDisplay(TITLE_SCREEN, GAMEBOARD_DIV)
+            displayController.toggleDisplay([TITLE_SCREEN], [GAMEBOARD_DIV])
+            place_mark(GAMEBOARD_CELLS)
         }) 
     })
 
@@ -155,20 +160,28 @@ const GameLogic = (() => {
                 alert("Player won")
                 GAMEBOARD_CELLS.forEach((cell) => {
                     cell.style.pointerEvents = "none"
+                    return
                 })
             }
+
+
+            // Checks if gameboard is full
+            else if (!gameboard.getBoard().includes(" ") && p1Wins ===false && p2Wins === false) {
+                alert("The array is full. Its a draw")
+            }
+
+            console.log(`Player 1 winning status: ${p1Wins}`);
+            console.log(`Player 2 winning status: ${p2Wins}`);
         })
-        if (gameboard.getBoard().every(element => element.length < 0)) {
-            alert("The board is full")
-        }
+
+        
 
     }
 
 
-    place_mark(GAMEBOARD_CELLS)
-
     
-    return {WIN_CONDITIONS}
+
+
 
 
 })()
