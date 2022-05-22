@@ -1,6 +1,6 @@
 const gameboard =  (() => {
 
-    let board = [" X ", " ", " ", "O", " "," ", " ", " ", " "]
+    let board = ["  ", " ", " ", " ", " "," ", " ", " ", " "]
 
     const getBoard = () => {
         return board;
@@ -72,6 +72,7 @@ const GameLogic = (() => {
         [2,5,8],
         [2,4,6],
         [3,4,5],
+        [6,7,8],
     ]
 
     let turn = "X";
@@ -88,6 +89,7 @@ const GameLogic = (() => {
     function place_mark(cell_array) {
         cell_array.forEach((cell) => {
             cell.addEventListener("click", () => {
+
                 // PLACING MARK ON THE BOARD
                 if (player1.moves.includes(cell.dataset.index) || player2.moves.includes(cell.dataset.index)) {
                     alert("Cant place mark there");
@@ -98,12 +100,13 @@ const GameLogic = (() => {
                             cell.textContent = player.mark;
                             gameboard.getBoard()[cell.dataset.index] = player.mark;
                             // ADDS INDEX TO THE PLAYER´S MOVES ARRAY
-                            player.moves.push(cell.dataset.index)
+                            player.moves.push(+cell.dataset.index)
                         }
                     }
                 }
+            // check_winner
+            check_winner(player1,player2)
             // SWITCH TURN
-    
             if (turn === "X") {
                 turn = "O"
             } else {
@@ -136,11 +139,17 @@ const GameLogic = (() => {
 
     const check_winner = (p1,p2) => {
         if (p1.moves.length > 2 || p2.moves.length > 2) {
-            alert("Check_winner function active")
+            WIN_STRING = JSON.stringify(WIN_CONDITIONS);
+            p1_STRING = JSON.stringify(p1.moves.sort());
+            is_winner = WIN_STRING.indexOf(p1_STRING)
+            alert(is_winner)
         }
     }
 
     place_mark(GAMEBOARD_CELLS)
+
+    
+    {return WIN_CONDITIONS}
 
 
 })()
