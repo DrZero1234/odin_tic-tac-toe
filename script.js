@@ -113,7 +113,7 @@ const GameLogic = (() => {
                     }
                 }
             // check_winner
-            check_winner(player1,player2)
+            check_winner()
             // SWITCH TURN
             if (turn === "X") {
                 turn = "O"
@@ -143,19 +143,24 @@ const GameLogic = (() => {
         place_mark(GAMEBOARD_CELLS)
         player1.moves = [];
         player2.moves = [];
+        turn = player1.mark
     });
 
-    const check_winner = (p1,p2) => {
-        if (p1.moves.length > 2 || p2.moves.length > 2) {
-            for (win_array of WIN_CONDITIONS) {
-                let isWinner = p1.moves.every(e => win_array.includes(e))
-                if (isWinner) {
-                    alert("Winner")
-                    return p1
-                }
+    const check_winner = () => {
+        WIN_CONDITIONS.forEach(winCondition => {
+            const p1Wins = winCondition.every(a => player1.moves.includes(a))
+            const p2Wins = winCondition.every(a => player2.moves.includes(a))
+
+            if (p1Wins || p2Wins) {
+                alert("Player won")
+                GAMEBOARD_CELLS.forEach((cell) => {
+                    cell.style.pointerEvents = "none"
+                })
             }
-        }
+        })
+
     }
+
 
     place_mark(GAMEBOARD_CELLS)
 
