@@ -65,14 +65,22 @@ const displayController = (() => {
 const GameLogic = (() => {
     displayController.generateBoard();
     const WIN_CONDITIONS = [
+
+        // Row winning
         [0,1,2],
-        [0,3,6],
-        [0,4,8],
-        [1,4,7],
-        [2,5,8],
-        [2,4,6],
         [3,4,5],
         [6,7,8],
+
+        // Columns
+        [0,3,6],
+        [1,4,7],
+        [2,5,8],
+
+        // Diagonal
+        [0,4,8],
+        [2,4,6],
+  
+
     ]
 
     let turn = "X";
@@ -139,17 +147,20 @@ const GameLogic = (() => {
 
     const check_winner = (p1,p2) => {
         if (p1.moves.length > 2 || p2.moves.length > 2) {
-            WIN_STRING = JSON.stringify(WIN_CONDITIONS);
-            p1_STRING = JSON.stringify(p1.moves.sort());
-            is_winner = WIN_STRING.indexOf(p1_STRING)
-            alert(is_winner)
+            for (win_array of WIN_CONDITIONS) {
+                let isWinner = p1.moves.every(e => win_array.includes(e))
+                if (isWinner) {
+                    alert("Winner")
+                    return p1
+                }
+            }
         }
     }
 
     place_mark(GAMEBOARD_CELLS)
 
     
-    {return WIN_CONDITIONS}
+    return {WIN_CONDITIONS}
 
 
 })()
