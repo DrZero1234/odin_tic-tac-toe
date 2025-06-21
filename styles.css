@@ -10,6 +10,10 @@
     align-items: center;
 }
 
+[class="disabled"] {
+    display: none;
+}
+
 #gameboard.disabled,
 #title-screen.disabled{
     display:none;
@@ -21,9 +25,32 @@
     justify-content: center;
 }
 
+.board-field{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+#post-game {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#post-game button {
+    padding: 20px;
+}
+
 #gameboard {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+}
+
+#gameboard > div:hover {
+    background-color: #BFDBFE;
+    cursor: pointer;
 }
 
 .cell {
